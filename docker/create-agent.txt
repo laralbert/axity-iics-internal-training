@@ -1,0 +1,23 @@
+docker run -it --name test_iics_agent -p 5432:5432 -v ${PWD}:/software ubuntu bin/bash
+apt-get -y update
+apt-get -y install libcanberra-gtk-module libcanberra-gtk3-module
+useradd -s /bin/bash -d /home/axity -m -G sudo axity
+echo "axity:Welcome1"|chpasswd
+cd /software
+chmod a+x agent64_install_ng_ext.bin
+su - axity
+cd /software
+./agent64_install_ng_ext.bin -i silent -DUSER_INSTALL_DIR=/home/axity/infaagent
+cd /home/axity/infaagent/apps/agentcore
+./infaagent startup
+./consoleAgentManager.sh configureToken alexander.chamizo@axity.com
+
+
+apt-get -y update
+apt-get -y install libcanberra-gtk-module libcanberra-gtk3-module
+cd /tmp
+chmod a+x agent64_install_ng_ext.bin
+./agent64_install_ng_ext.bin -i silent -DUSER_INSTALL_DIR=/root/infaagent
+cd /root/infaagent/apps/agentcore
+
+./consoleAgentManager.sh configureToken alexander.chamizo@axity.com XWRN74oOcwHUlAcRTHhvn97oegNIuTCXOd2e1enEAU7TMlbMXokOj3GYMg_4xV7g6JQwuF3L46odY1aB8hHGaC
